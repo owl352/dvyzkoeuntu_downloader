@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendVideo = void 0;
 const fs_1 = __importDefault(require("fs"));
 const logger_helper_1 = require("./logger.helper");
+const remove_video_helper_1 = require("./remove-video-helper");
 function sendVideo(fname, ctx, statusChanger, msg) {
     return __awaiter(this, void 0, void 0, function* () {
         ctx.telegram.editMessageText(ctx.message.chat.id, msg.message_id, null, "100%");
@@ -31,6 +32,7 @@ function sendVideo(fname, ctx, statusChanger, msg) {
                         caption: "Ваше видео!",
                     });
                 }
+                (0, remove_video_helper_1.remvoeVideo)(f);
                 statusChanger.destroy();
             }
         }

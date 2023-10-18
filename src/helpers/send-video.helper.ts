@@ -1,6 +1,7 @@
 import fs from "fs";
 import { StatusChanger } from "../classes";
 import { Logger } from "./logger.helper";
+import { remvoeVideo } from "./remove-video-helper";
 
 export async function sendVideo(
   fname: string,
@@ -31,6 +32,7 @@ export async function sendVideo(
           }
         );
       }
+      remvoeVideo(f);
       statusChanger.destroy();
     }
   }
