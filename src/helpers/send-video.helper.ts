@@ -1,8 +1,6 @@
 import fs from "fs";
 import { StatusChanger } from "../classes";
 import { Logger } from "./logger.helper";
-import { timeStringToMs } from "@lexxxell/timestring-to-ms";
-import { fileLifeTime } from "./constants.helper";
 
 export async function sendVideo(
   fname: string,
@@ -20,12 +18,20 @@ export async function sendVideo(
     console.log(f);
     if (f.includes(fname)) {
       new Logger("send video").info("./videos/" + f);
-      await ctx.reply("http://download.vkytdz.online/" + f);
+      if (fs.statSync("./videos/" + f).size / (1024 * 1024) > 45) {
+        await ctx.reply(
+          "Ваше видео доступно превышает 50 мб и будет доступно по ссылке ниже.\n Оно доступно в течении 30 минут http://download.vkytdz.online/" +
+            f
+        );
+      }else{
+        await ctx.replyWithVideo(
+          { source: "./videos/" + f },
+          {
+            caption: "Ваше видео!",
+          }
+        );
+      }
       statusChanger.destroy();
-      setTimeout(
-        () => fs.rmSync("./videos/" + f),
-        timeStringToMs(fileLifeTime)
-      );
     }
   }
 }

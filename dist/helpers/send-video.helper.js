@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendVideo = void 0;
 const fs_1 = __importDefault(require("fs"));
 const logger_helper_1 = require("./logger.helper");
-const timestring_to_ms_1 = require("@lexxxell/timestring-to-ms");
-const constants_helper_1 = require("./constants.helper");
 function sendVideo(fname, ctx, statusChanger, msg) {
     return __awaiter(this, void 0, void 0, function* () {
         ctx.telegram.editMessageText(ctx.message.chat.id, msg.message_id, null, "100%");
@@ -24,9 +22,16 @@ function sendVideo(fname, ctx, statusChanger, msg) {
             console.log(f);
             if (f.includes(fname)) {
                 new logger_helper_1.Logger("send video").info("./videos/" + f);
-                yield ctx.reply("http://download.vkytdz.online/" + f);
+                if (fs_1.default.statSync("./videos/" + f).size / (1024 * 1024) > 45) {
+                    yield ctx.reply("Ваше видео доступно превышает 50 мб и будет доступно по ссылке ниже.\n Оно доступно в течении 30 минут http://download.vkytdz.online/" +
+                        f);
+                }
+                else {
+                    yield ctx.replyWithVideo({ source: "./videos/" + f }, {
+                        caption: "Ваше видео!",
+                    });
+                }
                 statusChanger.destroy();
-                setTimeout(() => fs_1.default.rmSync("./videos/" + f), (0, timestring_to_ms_1.timeStringToMs)(constants_helper_1.fileLifeTime));
             }
         }
     });
