@@ -9,6 +9,7 @@ import { sendVideo } from "./send-video.helper";
 import { sendError } from "./send-error.helper";
 import { sendStatus } from "./send-status.helper";
 import { StatusChanger } from "../classes";
+import { outDir } from "./constants.helper";
 
 export async function onText(ctx: Context) {
   const msg = await ctx.reply("Видео поставленно в очередь!");
@@ -31,6 +32,7 @@ export async function onText(ctx: Context) {
       downloadVideoFromYoutube(
         ctx.message.text,
         ctx.message.from.id,
+        outDir,
         (fname: string) => sendVideo(fname, ctx, sChanger, msg),
         (fname: string) => sendError("yotube", ctx),
         (data: string) => sendStatus(data, ctx, sChanger)
@@ -39,6 +41,7 @@ export async function onText(ctx: Context) {
       downloadVideoFromDzen(
         ctx.message.text,
         ctx.message.from.id,
+        outDir ?? "./videos",
         (fname: string) => sendVideo(fname, ctx, sChanger, msg),
         (fname: string) => sendError("dzen", ctx),
         (data: string) => sendStatus(data, ctx, sChanger)
@@ -47,6 +50,7 @@ export async function onText(ctx: Context) {
       downloadVideoFromVk(
         ctx.message.text,
         ctx.message.from.id,
+        outDir ?? "./videos",
         (fname: string) => sendVideo(fname, ctx, sChanger, msg),
         (fname: string) => sendError("vk", ctx),
         (data: string) => sendStatus(data, ctx, sChanger)

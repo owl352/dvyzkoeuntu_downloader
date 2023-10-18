@@ -5,7 +5,6 @@ import { onText } from "./on-text.helper";
 
 export function initBot() {
   const bot = new Telegraf(process.env.BOT_TOKEN!);
-
   bot.start(onStart);
   bot.on("text", onText);
   bot.catch((err) => {

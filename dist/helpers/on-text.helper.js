@@ -16,6 +16,7 @@ const send_video_helper_1 = require("./send-video.helper");
 const send_error_helper_1 = require("./send-error.helper");
 const send_status_helper_1 = require("./send-status.helper");
 const classes_1 = require("../classes");
+const constants_helper_1 = require("./constants.helper");
 function onText(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         const msg = yield ctx.reply("Видео поставленно в очередь!");
@@ -30,13 +31,13 @@ function onText(ctx) {
             const url = new URL(ctx.message.text);
             new logger_helper_1.Logger("bot").log("new link: " + ctx.message.text);
             if (url.host.includes("yt") || url.host.includes("you")) {
-                (0, video_downloader_1.downloadVideoFromYoutube)(ctx.message.text, ctx.message.from.id, (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("yotube", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
+                (0, video_downloader_1.downloadVideoFromYoutube)(ctx.message.text, ctx.message.from.id, constants_helper_1.outDir, (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("yotube", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
             }
             else if (url.hostname.includes("dzen")) {
-                (0, video_downloader_1.downloadVideoFromDzen)(ctx.message.text, ctx.message.from.id, (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("dzen", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
+                (0, video_downloader_1.downloadVideoFromDzen)(ctx.message.text, ctx.message.from.id, constants_helper_1.outDir !== null && constants_helper_1.outDir !== void 0 ? constants_helper_1.outDir : "./videos", (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("dzen", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
             }
             else if (url.hostname.includes("vk")) {
-                (0, video_downloader_1.downloadVideoFromVk)(ctx.message.text, ctx.message.from.id, (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("vk", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
+                (0, video_downloader_1.downloadVideoFromVk)(ctx.message.text, ctx.message.from.id, constants_helper_1.outDir !== null && constants_helper_1.outDir !== void 0 ? constants_helper_1.outDir : "./videos", (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("vk", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
             }
             else {
                 ctx.reply(`Эта ссылка не принадлежит ни одному из 3х сервисов 😡, как минимум на момент написния кода..\n${ctx.message.text}`);

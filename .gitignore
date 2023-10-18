@@ -5,9 +5,10 @@
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
+videos/**/*
 # Local History for Visual Studio Code
 .history/
-
+.keep
 # Built Visual Studio Code Extensions
 *.vsix
 
