@@ -24,8 +24,7 @@ function sendVideo(fname, ctx, statusChanger, msg) {
             if (f.includes(fname)) {
                 new logger_helper_1.Logger("send video").info("./videos/" + f);
                 if (fs_1.default.statSync("./videos/" + f).size / (1024 * 1024) > 45) {
-                    yield ctx.reply("Ваше видео доступно превышает 50 мб и будет доступно по ссылке ниже.\n Оно доступно в течении 30 минут http://download.vkytdz.online/" +
-                        f);
+                    yield ctx.reoplyWithMarkdown(`Ваше видео превышает 50 мб и будет доступно по ссылке ниже. \nhttp://download.vkytdz.online/${f}\n*Ссылка работает в течении 30 минут*`);
                 }
                 else {
                     yield ctx.replyWithVideo({ source: "./videos/" + f }, {

@@ -20,11 +20,10 @@ export async function sendVideo(
     if (f.includes(fname)) {
       new Logger("send video").info("./videos/" + f);
       if (fs.statSync("./videos/" + f).size / (1024 * 1024) > 45) {
-        await ctx.reply(
-          "Ваше видео доступно превышает 50 мб и будет доступно по ссылке ниже.\n Оно доступно в течении 30 минут http://download.vkytdz.online/" +
-            f
+        await ctx.reoplyWithMarkdown(
+          `Ваше видео превышает 50 мб и будет доступно по ссылке ниже. \nhttp://download.vkytdz.online/${f}\n*Ссылка работает в течении 30 минут*`
         );
-      }else{
+      } else {
         await ctx.replyWithVideo(
           { source: "./videos/" + f },
           {
