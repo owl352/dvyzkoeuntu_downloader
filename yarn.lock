@@ -4,7 +4,7 @@
 
 "@owl352/video-downloader@owl352/dvyzkoeuntu":
   version "1.0.0"
-  resolved "https://codeload.github.com/owl352/dvyzkoeuntu/tar.gz/a15155ecd8df6adce828c202754f6e01f71a939f"
+  resolved "https://codeload.github.com/owl352/dvyzkoeuntu/tar.gz/345c6e60ebeb547e0b0e47759911bd98d4d2529c"
   dependencies:
     axios "^1.5.1"
     cheerio "^1.0.0-rc.12"

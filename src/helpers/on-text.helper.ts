@@ -31,7 +31,7 @@ export async function onText(ctx: Context) {
       downloadVideoFromYoutube(
         ctx.message.text,
         ctx.message.from.id,
-        (fname: string) => sendVideo(fname, ctx, sChanger),
+        (fname: string) => sendVideo(fname, ctx, sChanger, msg),
         (fname: string) => sendError("yotube", ctx),
         (data: string) => sendStatus(data, ctx, sChanger)
       );
@@ -39,7 +39,7 @@ export async function onText(ctx: Context) {
       downloadVideoFromDzen(
         ctx.message.text,
         ctx.message.from.id,
-        (fname: string) => sendVideo(fname, ctx, sChanger),
+        (fname: string) => sendVideo(fname, ctx, sChanger, msg),
         (fname: string) => sendError("dzen", ctx),
         (data: string) => sendStatus(data, ctx, sChanger)
       );
@@ -47,7 +47,7 @@ export async function onText(ctx: Context) {
       downloadVideoFromVk(
         ctx.message.text,
         ctx.message.from.id,
-        (fname: string) => sendVideo(fname, ctx, sChanger),
+        (fname: string) => sendVideo(fname, ctx, sChanger, msg),
         (fname: string) => sendError("vk", ctx),
         (data: string) => sendStatus(data, ctx, sChanger)
       );

@@ -14,11 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendVideo = void 0;
 const fs_1 = __importDefault(require("fs"));
-function sendVideo(fname, ctx, statusChanger) {
+const logger_helper_1 = require("./logger.helper");
+function sendVideo(fname, ctx, statusChanger, msg) {
     return __awaiter(this, void 0, void 0, function* () {
+        ctx.telegram.editMessageText(ctx.message.chat.id, msg.message_id, null, "100%");
         for (let f of fs_1.default.readdirSync("./videos/")) {
             console.log(f);
             if (f.includes(fname)) {
+                new logger_helper_1.Logger("send video").info("./videos/" + f);
                 yield ctx.replyWithVideo({ source: "./videos/" + f }, {
                     caption: "Ваше видео!",
                 });
