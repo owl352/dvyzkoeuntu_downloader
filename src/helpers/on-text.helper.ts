@@ -29,14 +29,20 @@ export async function onText(ctx: Context) {
     const url = new URL(ctx.message.text);
     new Logger("bot").log("new link: " + ctx.message.text);
     if (url.host.includes("yt") || url.host.includes("you")) {
-      downloadVideoFromYoutube(
-        ctx.message.text,
-        ctx.message.from.id,
-        outDir,
-        (fname: string) => sendVideo(fname, ctx, sChanger, msg),
-        (fname: string) => sendError("yotube", ctx),
-        (data: string) => sendStatus(data, ctx, sChanger)
-      );
+      if (url.host.includes("&index=")) {
+        ctx.reply(
+          `Пожалуйста, не отправляйте целый плейлист!\n${ctx.message.text}`
+        );
+      } else {
+        downloadVideoFromYoutube(
+          ctx.message.text,
+          ctx.message.from.id,
+          outDir,
+          (fname: string) => sendVideo(fname, ctx, sChanger, msg),
+          (fname: string) => sendError("yotube", ctx),
+          (data: string) => sendStatus(data, ctx, sChanger)
+        );
+      }
     } else if (url.hostname.includes("dzen")) {
       downloadVideoFromDzen(
         ctx.message.text,

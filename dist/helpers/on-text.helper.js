@@ -31,7 +31,12 @@ function onText(ctx) {
             const url = new URL(ctx.message.text);
             new logger_helper_1.Logger("bot").log("new link: " + ctx.message.text);
             if (url.host.includes("yt") || url.host.includes("you")) {
-                (0, video_downloader_1.downloadVideoFromYoutube)(ctx.message.text, ctx.message.from.id, constants_helper_1.outDir, (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("yotube", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
+                if (url.host.includes("&index=")) {
+                    ctx.reply(`Пожалуйста, не отправляйте целый плейлист!\n${ctx.message.text}`);
+                }
+                else {
+                    (0, video_downloader_1.downloadVideoFromYoutube)(ctx.message.text, ctx.message.from.id, constants_helper_1.outDir, (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("yotube", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
+                }
             }
             else if (url.hostname.includes("dzen")) {
                 (0, video_downloader_1.downloadVideoFromDzen)(ctx.message.text, ctx.message.from.id, constants_helper_1.outDir !== null && constants_helper_1.outDir !== void 0 ? constants_helper_1.outDir : "./videos", (fname) => (0, send_video_helper_1.sendVideo)(fname, ctx, sChanger, msg), (fname) => (0, send_error_helper_1.sendError)("dzen", ctx), (data) => (0, send_status_helper_1.sendStatus)(data, ctx, sChanger));
